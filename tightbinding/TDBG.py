@@ -3,14 +3,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # ================= 1. 参数定义 =================
-theta = 1.33  # °
+theta = 2.0  # °
 u = 0.0797 * 1000     # mev
 u_prime = 0.0975 * 1000  # mev
 a = 0.246   # nm
 N = 5
 theta_rad = theta / 180.0 * np.pi
 hv = 2.1354 * a * 1000  # meV*nm
-valley = -1
+valley = 1
 KDens  = 100            #density of k points
 
 gamma1 = 0.4 * 1000        # mev
@@ -18,8 +18,8 @@ gamma3 = 0.32 * 1000       # mev
 gamma4 = 0.044 * 1000      # mev
 hv3 =  (np.sqrt(3)/2) * gamma3 * a
 hv4 =  (np.sqrt(3)/2) * gamma4 * a
-delta_prime = 0.055 * 1000 # mev
-delta = 0.0
+delta_prime = 0.050 * 1000 # mev
+delta = 0.0   #mev
 
 L_M = a / ( 2 * np.sin(theta_rad/2) )
 L_M1 = np.array([0, -1]) * L_M
@@ -165,7 +165,9 @@ for idx, k_pos in enumerate(full_path):
     mid = dim // 2
     print(f"k_idx: {idx}, Bands: {E[idx, mid-2:mid+2]}")
 
-# ================= 能带偏移修正 (适应 TDBG 可能打开的能隙) =================
+
+
+# ================= 能带偏移修正  =================
 H_ref = build_hamiltonian(K_vec[0], K_vec[1])
 ref_eigvals = np.sort(np.real(np.linalg.eigvalsh(H_ref)))
 
@@ -173,16 +175,19 @@ ref_eigvals = np.sort(np.real(np.linalg.eigvalsh(H_ref)))
 mid_idx = dim // 2
 E_offset = (ref_eigvals[mid_idx - 1] + ref_eigvals[mid_idx]) / 2
 E = E - E_offset
+print(E_offset)
+
+
 
 # ================= 4. 绘图 =================
-plt.figure(figsize=(10, 7))
+plt.figure(figsize=(5, 7))
 
 for j in range(E.shape[1]):
     plt.plot(E[:, j], color='black', linewidth=0.8, alpha=0.8)
 
 
-# 缩放 Y 轴，TDBG 的核心平带在 100 meV 以内就能看得很清楚
-plt.ylim(-150, 150)
+# 缩放 Y 轴
+plt.ylim(-200, 200)
 
 plt.title(fr"TDBG (AB-AB) Moire Bands at $\theta={theta}^\circ$ ($\Delta={delta}$ meV)", fontsize=16)
 plt.ylabel('Energy (meV)', fontsize=14)
