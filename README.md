@@ -1,3 +1,3 @@
 # TBG
 this is my study process for TBG
-mainly using Koshino Model
+mainly using Koshino model
