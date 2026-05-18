@@ -3,14 +3,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # ================= 1. 参数定义 =================
-theta = 2.0  # °
+theta = 1.33  # °
 u = 0.0797 * 1000     # mev
 u_prime = 0.0975 * 1000  # mev
 a = 0.246   # nm
 N = 5
 theta_rad = theta / 180.0 * np.pi
 hv = 2.1354 * a * 1000  # meV*nm
-valley = 1
+valley = -1
 KDens  = 100            #density of k points
 
 gamma1 = 0.4 * 1000        # mev
@@ -187,7 +187,7 @@ for j in range(E.shape[1]):
 
 
 # 缩放 Y 轴
-plt.ylim(-200, 200)
+plt.ylim(-50, 50)
 
 plt.title(fr"TDBG (AB-AB) Moire Bands at $\theta={theta}^\circ$ ($\Delta={delta}$ meV)", fontsize=16)
 plt.ylabel('Energy (meV)', fontsize=14)
